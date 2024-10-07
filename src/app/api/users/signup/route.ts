@@ -22,6 +22,7 @@ export async function POST(request: NextRequest) {
             email: reqBody.user.email,
             username: reqBody.user.username,
             password: hashedPassword,
+            id: Math.floor(Math.random()* 1000)
         })
         const savedUser = await createNewUser.save()
         return NextResponse.json({message: "User created!", saved: true, savedUser },{status: 201})

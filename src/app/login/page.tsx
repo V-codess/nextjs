@@ -14,12 +14,27 @@ export default function loginScreen() {
 
     const login = async() => {
       try {
+        console.log(JSON.stringify({data: user}));
+        
         const response = await fetch("/api/users/login", {
           method: "POST",
-          body: JSON.stringify(user)
+          body: JSON.stringify({data: user}),
+          headers: {
+            "Content-Type": "application/json",
+          },
         });
-        console.log(response)
-        router.push("/profile")
+        console.log(response);
+        if (response.ok) {
+          const data = await response.json(); 
+          let id = data.user.id
+          router.push(`/profile/${id}`);
+        } else if (response.status === 400) {
+          alert("Invalid email or password.");
+        } else if (response.status === 500) {
+          alert("Server error. Please try again later.");
+        } else {
+          alert("Unexpected error. Please try again.");
+        }
       } catch (error) {
         console.log("Unable to login")
       }

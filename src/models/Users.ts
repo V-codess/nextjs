@@ -19,7 +19,14 @@ const userSchema = new mongoose.Schema({
    isVerified:{
     type: Boolean,
     default: false
+   },
+   id:{
+      type: Number,
+      unique: true
    }
+},{
+   versionKey: false,
+   autoIndex: true,
 })
 
 // const User = mongoose.models.users || mongoose.model("Users", userSchema);
